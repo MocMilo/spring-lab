@@ -34,3 +34,10 @@ http://localhost:8080/test
 #### For each request check changes:
 1. In database "Department" table new row should be created.
 2. In console you should see JMS info about created objects.
+
+### 4) To check health with Actuator
+```
+http://localhost:9001/actuator/metrics
+
+http://localhost:9001/actuator/metrics/executor.completed
+```
