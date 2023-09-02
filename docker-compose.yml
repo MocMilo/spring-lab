@@ -1,0 +1,52 @@
+version: '3'
+services:
+  # TODO: prod deployment
+  #  springlab-app:
+  #    build:
+  #      context: .
+  #      dockerfile: Dockerfile
+  #    depends_on:
+  #      - springlab-db
+  #      - springlab-kafka-jms
+  #    ports:
+  #      - 8080:8080
+  #    volumes:
+  #      - /var/springlab-app/log:/app/log
+  #    environment:
+  #      SPRING_DATASOURCE_URL: jdbc:postgresql://my-demo-db:5432/springlab
+  #      SPRING_DATASOURCE_USERNAME: root
+  #      SPRING_DATASOURCE_PASSWORD: root
+  #      SPRING_KAFKA_BOOTSTRAP_SERVERS: springlab-kafka-jms:9092
+  #
+  springlab-db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=springlab
+    volumes:
+      - springlab-db-data:/var/lib/postgresql/data/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:latest'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  springlab-kafka-jms:
+    image: 'confluentinc/cp-kafka:latest'
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://springlab-kafka-jms:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+volumes:
+  springlab-db-data:
