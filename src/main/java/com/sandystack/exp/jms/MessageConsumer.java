@@ -16,12 +16,13 @@ public class MessageConsumer {
     private DummyDataProvider dummyDataProvider;
 
 
-    @KafkaListener(topics = "test-topic", groupId = "my-group")
+    @KafkaListener(topics = "test-topic2", groupId = "my-group")
     public void listen(String message) throws ExecutionException, InterruptedException {
         System.out.println("Kafka Consumer - received message: " + message);
 
-        concurrentCalculator.calculateMetrics();
+        for (int i = 0; i < 2; i++) {
+            concurrentCalculator.calculateMetrics(30);
+        }
         dummyDataProvider.createDummyObjects();
     }
-
 }

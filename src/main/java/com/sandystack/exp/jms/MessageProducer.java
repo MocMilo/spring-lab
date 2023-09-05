@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MessageProducer {
 
-    private static final String TOPIC = "test-topic";
+    private static final String TOPIC = "test-topic2";
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String message) {

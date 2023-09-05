@@ -14,24 +14,31 @@ import java.util.stream.IntStream;
 @Service
 public class ParallelCalculator {
 
-    public void calculateMetrics() throws InterruptedException {
+    public void calculateMetrics(int items) throws InterruptedException {
+        List<Integer> numbers = IntStream.rangeClosed(1, items).boxed().collect(Collectors.toList());
 
-        List<Integer> numbers = IntStream.rangeClosed(1, 30).boxed().collect(Collectors.toList());
+        final int threadsNumber = 3;
+        int span = items / threadsNumber;
 
-        CompletableFuture<List<Integer>> future1 = processAsync(numbers.subList(0, 10));
-        CompletableFuture<List<Integer>> future2 = processAsync(numbers.subList(10, 20));
-        CompletableFuture<List<Integer>> future3 = processAsync(numbers.subList(20, 30));
+        List<CompletableFuture<List<Integer>>> futures = new ArrayList<>();
 
-        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(future1, future2, future3);
+        // Dynamically creating futures based on threadsNumber
+        for (int i = 0; i < threadsNumber; i++) {
+            int start = i * span;
+            int end = (i + 1) * span;
+            futures.add(processAsync(numbers.subList(start, end)));
+        }
+
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
 
         CompletableFuture<List<Integer>> finalResult = combinedFuture.thenApply(v -> {
             List<Integer> combined = new ArrayList<>();
-            try {
-                combined.addAll(future1.get());
-                combined.addAll(future2.get());
-                combined.addAll(future3.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+            for (CompletableFuture<List<Integer>> future : futures) {
+                try {
+                    combined.addAll(future.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
             return combined;
         });
@@ -39,7 +46,6 @@ public class ParallelCalculator {
         try {
             System.out.println("Final combined results");
             finalResult.get().forEach(System.out::println);
-
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

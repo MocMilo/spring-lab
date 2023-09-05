@@ -41,3 +41,27 @@ http://localhost:9001/actuator/metrics
 
 http://localhost:9001/actuator/metrics/executor.completed
 ```
+
+### 5) Prometheus UI
+```
+http://localhost:9090
+```
+check example graph with example query:
+jvm_memory_used_bytes{area="heap"}
+
+### 6) Grafana UI
+```
+http://localhost:3000
+```
+login with default user: Admin
+
+Go to location in Grafana menu: 
+Home > Connections > Data sources > Add data source
+choose -> Prometheus
+    - Add Prometheus URL http://localhost:9090
+    - Add Dashboard
+    - Add visualisations
+
+Home > Dashboards > New Dashboard > Edit panel
+    - Query
+    - Add example metric jvm_buffer_memory_used_bytes
