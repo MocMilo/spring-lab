@@ -1,9 +1,9 @@
 package com.sandystack.exp.services;
 
-import com.sandystack.exp.model.Department;
-import com.sandystack.exp.model.Employee;
-import com.sandystack.exp.model.Product;
-import com.sandystack.exp.model.Sale;
+import com.sandystack.exp.model.entities.Department;
+import com.sandystack.exp.model.entities.Employee;
+import com.sandystack.exp.model.entities.Product;
+import com.sandystack.exp.model.entities.Sale;
 import com.sandystack.exp.repository.DepartmentRepository;
 import com.sandystack.exp.repository.EmployeeRepository;
 import com.sandystack.exp.repository.ProductRepository;

@@ -2,7 +2,7 @@ package com.sandystack.exp.rest;
 
 
 import com.sandystack.exp.jms.MessageProducer;
-import com.sandystack.exp.model.Department;
+import com.sandystack.exp.model.entities.Department;
 import com.sandystack.exp.repository.DepartmentRepository;
 import com.sandystack.exp.services.experiments.ExperimentService;
 import lombok.AllArgsConstructor;

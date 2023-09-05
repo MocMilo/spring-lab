@@ -1,21 +1,21 @@
 package com.sandystack.exp;
 
-import com.sandystack.exp.model.Department;
-import com.sandystack.exp.model.Employee;
-import com.sandystack.exp.model.Product;
-import com.sandystack.exp.model.Sale;
+import com.sandystack.exp.model.entities.Department;
+import com.sandystack.exp.model.entities.Employee;
+import com.sandystack.exp.model.entities.Product;
+import com.sandystack.exp.model.entities.Sale;
 import com.sandystack.exp.repository.DepartmentRepository;
 import com.sandystack.exp.repository.EmployeeRepository;
 import com.sandystack.exp.repository.ProductRepository;
 import com.sandystack.exp.repository.SaleRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class SpringLabApplicationTests {
 
@@ -32,6 +32,11 @@ class SpringLabApplicationTests {
     @Autowired
     private SaleRepository saleRepository;
 
+
+
+
+
+    // OTHER TESTS
     @Test
     void contextLoads() {
         departmentRepository.findAll();
@@ -87,5 +92,7 @@ class SpringLabApplicationTests {
         System.out.println("number sales in db: " + saleCount);
         System.out.println("fetched Employee id:" + fetched.getId() + " " + fetched.getFirstName());
     }
+
+
 
 }

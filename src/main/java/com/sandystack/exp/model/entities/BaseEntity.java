@@ -1,4 +1,4 @@
-package com.sandystack.exp.model;
+package com.sandystack.exp.model.entities;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
