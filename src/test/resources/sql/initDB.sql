@@ -1,5 +1,4 @@
-CREATE TABLE public.department
-(
+CREATE TABLE public.department(
     departmentid   varchar(255) NOT NULL,
     departmentname varchar      NOT NULL,
     managerid      varchar(255) NULL,
@@ -7,8 +6,7 @@ CREATE TABLE public.department
     CONSTRAINT department_pkey PRIMARY KEY (departmentid)
 );
 
-CREATE TABLE public.product
-(
+CREATE TABLE public.product(
     productid     varchar(255) NOT NULL,
     productname   varchar      NOT NULL,
     category      varchar      NOT NULL,
@@ -19,8 +17,7 @@ CREATE TABLE public.product
     CONSTRAINT product_pkey PRIMARY KEY (productid)
 );
 
-CREATE TABLE public.employee
-(
+CREATE TABLE public.employee(
     employeeid   varchar(255) NOT NULL,
     firstname    varchar      NOT NULL,
     lastname     varchar      NOT NULL,
@@ -34,8 +31,7 @@ CREATE TABLE public.employee
     CONSTRAINT employee_pkey PRIMARY KEY (employeeid)
 );
 
-CREATE TABLE public.sales
-(
+CREATE TABLE public.sales(
     salesid       varchar(255) NOT NULL,
     employeeid    varchar(255) NULL,
     productid     varchar(255) NULL,

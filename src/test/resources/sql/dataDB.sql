@@ -36,7 +36,7 @@ INSERT INTO Product (Productid, ProductName, Category, UnitPrice, StockQuantity,
 INSERT INTO Product (Productid, ProductName, Category, UnitPrice, StockQuantity, Supplier, Description) VALUES ('uuid_p006', 'Toolset Q', 'Hardware', 75.30, 250, 'Supplier Q', 'Quality toolset for various tasks');
 INSERT INTO Product (Productid, ProductName, Category, UnitPrice, StockQuantity, Supplier, Description) VALUES ('uuid_p007', 'Device R', 'Gadgets', 300.40, 150, 'Supplier R', 'Innovative device for modern needs');
 
--- Inserting Sales Operations
+-- Inserting Sales Operations TODO:Fixme: offset not working
 -- INSERT INTO Sales (Salesid, EmployeeID, ProductID, DateOfSale, QuantitySold, TotalAmount, CustomerName, CustomerEmail) VALUES ('uuid_s001', (SELECT EmployeeID FROM Employee LIMIT 1), (SELECT ProductID FROM Product LIMIT 1), '2022-01-15', 5, 502.50, 'Customer A', 'customer.a@example.com');
 -- INSERT INTO Sales (Salesid, EmployeeID, ProductID, DateOfSale, QuantitySold, TotalAmount, CustomerName, CustomerEmail) VALUES ('uuid_s002', (SELECT EmployeeID FROM Employee OFFSET 1 LIMIT 1), (SELECT ProductID FROM Product OFFSET 1 LIMIT 1), '2022-02-10', 3, 452.25, 'Customer B', 'customer.b@example.com');
 -- INSERT INTO Sales (Salesid, EmployeeID, ProductID, DateOfSale, QuantitySold, TotalAmount, CustomerName, CustomerEmail) VALUES ('uuid_s003', (SELECT EmployeeID FROM Employee OFFSET 2 LIMIT 1), (SELECT ProductID FROM Product OFFSET 2 LIMIT 1), '2022-03-15', 10, 2002.50, 'Customer C', 'customer.c@example.com');

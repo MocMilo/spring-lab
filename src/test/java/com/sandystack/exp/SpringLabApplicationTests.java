@@ -13,16 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.time.LocalDateTime;
 
+/**
+ * Just simple repository operations test
+ * TODO: remove
+ */
 @DataJpaTest
 @ActiveProfiles("test")
-@Sql(scripts = "/sql/initDB.sql")
-@Sql(scripts = "/sql/dataDB.sql")
-@Sql(scripts = "/sql/clearDB.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@SqlGroup({
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "/sql/initDB.sql"),
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "/sql/dataDB.sql"),
+        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "/sql/clearDB.sql")
+})
 class SpringLabApplicationTests {
-
 
     @Autowired
     private DepartmentRepository departmentRepository;
@@ -36,7 +42,6 @@ class SpringLabApplicationTests {
     @Autowired
     private SaleRepository saleRepository;
 
-    // OTHER TESTS
     @Test
     void contextLoads() {
         departmentRepository.findAll();

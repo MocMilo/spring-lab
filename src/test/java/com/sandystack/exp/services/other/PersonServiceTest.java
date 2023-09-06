@@ -11,6 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.stream.Stream;
 
+/**
+ * Example 'parametrized' unit tests
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 class PersonServiceTest {
@@ -18,7 +21,6 @@ class PersonServiceTest {
     @Autowired
     private PersonService personService;
 
-    // PARAMETRIZED TESTS
     @ParameterizedTest
     @MethodSource("providePersonData")
     void isEligibleForTheProgram(Person person, boolean expectedEligibility) {
