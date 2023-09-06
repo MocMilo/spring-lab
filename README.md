@@ -51,6 +51,10 @@ In case of change in Redis serialization config flush Redis with command:
 ```
 FLUSHDB
 ```
+To remove all cache
+```
+FLUSHALL
+```
 
 ### 6) Prometheus UI
 ```

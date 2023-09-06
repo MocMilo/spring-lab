@@ -30,6 +30,8 @@ public class ProductRedisRepository {
     }
 
     public Product findProductById(String id) {
+
+        System.out.println("called findProductById from DB");
         return (Product) template.opsForHash().get(HASH_KEY, id);
     }
 
