@@ -8,6 +8,7 @@ services:
   #    depends_on:
   #      - springlab-db
   #      - springlab-kafka-jms
+  #      - redis
   #    ports:
   #      - 8080:8080
   #    volumes:
@@ -66,6 +67,21 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin # Change this to a secure password
     depends_on:
       - prometheus
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
 volumes:
   springlab-db-data:
   grafana-storage:
+  redis-data:
+

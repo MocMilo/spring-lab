@@ -41,15 +41,25 @@ http://localhost:9001/actuator/metrics
 
 http://localhost:9001/actuator/metrics/executor.completed
 ```
+### 5) Redis in-memory database
 
-### 5) Prometheus UI
+to login to Redis commander: 
+```
+http://localhost:8081
+```
+In case of change in Redis serialization config flush Redis with command:
+```
+FLUSHDB
+```
+
+### 6) Prometheus UI
 ```
 http://localhost:9090
 ```
 check example graph with example query:
 jvm_memory_used_bytes{area="heap"}
 
-### 6) Grafana UI
+### 7) Grafana UI
 ```
 http://localhost:3000
 ```
@@ -65,3 +75,4 @@ choose -> Prometheus
 Home > Dashboards > New Dashboard > Edit panel
     - Query
     - Add example metric jvm_buffer_memory_used_bytes
+

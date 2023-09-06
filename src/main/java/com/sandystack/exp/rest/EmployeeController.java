@@ -35,7 +35,4 @@ public class EmployeeController {
                 ResponseEntity.notFound().build() :
                 ResponseEntity.ok(employees);
     }
-
-
-
 }
