@@ -1,8 +1,8 @@
 package com.sandystack.exp.repository;
 
 import com.sandystack.exp.model.entities.Department;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface DepartmentRepository extends CrudRepository<Department, String> {
+public interface DepartmentRepository extends JpaRepository<Department, String> {
 }

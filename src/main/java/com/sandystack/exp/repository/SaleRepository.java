@@ -1,8 +1,8 @@
 package com.sandystack.exp.repository;
 
 import com.sandystack.exp.model.entities.Sale;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SaleRepository extends CrudRepository<Sale, String> {
+public interface SaleRepository extends JpaRepository<Sale, String> {
 
 }

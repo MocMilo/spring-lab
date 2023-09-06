@@ -10,13 +10,17 @@ import com.sandystack.exp.repository.ProductRepository;
 import com.sandystack.exp.repository.SaleRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 
-@SpringBootTest
+@DataJpaTest
 @ActiveProfiles("test")
+@Sql(scripts = "/sql/initDB.sql")
+@Sql(scripts = "/sql/dataDB.sql")
+@Sql(scripts = "/sql/clearDB.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class SpringLabApplicationTests {
 
 
@@ -32,17 +36,12 @@ class SpringLabApplicationTests {
     @Autowired
     private SaleRepository saleRepository;
 
-
-
-
-
     // OTHER TESTS
     @Test
     void contextLoads() {
         departmentRepository.findAll();
         System.out.println("context loaded!");
     }
-
 
     @Test
     void testEntities() {
@@ -92,7 +91,5 @@ class SpringLabApplicationTests {
         System.out.println("number sales in db: " + saleCount);
         System.out.println("fetched Employee id:" + fetched.getId() + " " + fetched.getFirstName());
     }
-
-
 
 }

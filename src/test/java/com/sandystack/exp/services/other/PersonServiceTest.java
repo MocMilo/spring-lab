@@ -20,7 +20,7 @@ class PersonServiceTest {
 
     // PARAMETRIZED TESTS
     @ParameterizedTest
-    @MethodSource("providePersons")
+    @MethodSource("providePersonData")
     void isEligibleForTheProgram(Person person, boolean expectedEligibility) {
 
         // given
@@ -30,7 +30,7 @@ class PersonServiceTest {
         Assertions.assertEquals(expectedEligibility, actual);
     }
 
-    static Stream<Arguments> providePersons() {
+    static Stream<Arguments> providePersonData() {
         return Stream.of(
                 Arguments.of(new Person("Alice", 21), true),
                 Arguments.of(new Person("Tom", 17), false),

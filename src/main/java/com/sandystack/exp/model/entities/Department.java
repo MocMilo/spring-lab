@@ -20,4 +20,8 @@ public class Department extends BaseEntity {
     @Column(name = "departmentname")
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "managerId")
+    private Employee managerId;
+
 }
