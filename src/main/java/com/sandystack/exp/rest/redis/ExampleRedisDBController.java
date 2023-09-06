@@ -3,10 +3,8 @@ package com.sandystack.exp.rest.redis;
 import com.sandystack.exp.model.redis.Product;
 import com.sandystack.exp.repository.redis.ProductRedisRepository;
 import lombok.AllArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/redis/product")
-@EnableCaching
 public class ExampleRedisDBController {
 
     private ProductRedisRepository dao;

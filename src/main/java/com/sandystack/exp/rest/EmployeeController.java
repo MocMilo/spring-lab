@@ -1,7 +1,7 @@
 package com.sandystack.exp.rest;
 
 import com.sandystack.exp.model.entities.Employee;
-import com.sandystack.exp.repository.EmployeeRepository;
+import com.sandystack.exp.services.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Basic controller that returns serialized entity directly
@@ -18,19 +19,19 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeController {
 
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @GetMapping("/employee/{id}")
-    ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
-
-        return employeeRepository.findById(id)
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
+        Optional<Employee> employeeOp = Optional.ofNullable(employeeService.fetchEmployeeById(id));
+        return employeeOp
                 .map(employee -> new ResponseEntity<>(employee, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/employees")
     ResponseEntity<List<Employee>> getEmployeeById() {
-        List<Employee> employees =   employeeRepository.findAll();
+        List<Employee> employees = employeeService.findAll();
         return employees.isEmpty() ?
                 ResponseEntity.notFound().build() :
                 ResponseEntity.ok(employees);

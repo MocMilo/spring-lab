@@ -1,4 +1,4 @@
-package com.sandystack.exp.services;
+package com.sandystack.exp.services.other;
 
 import com.sandystack.exp.model.entities.Department;
 import com.sandystack.exp.model.entities.Employee;

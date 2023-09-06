@@ -1,7 +1,7 @@
 package com.sandystack.exp.jms;
 
 import com.sandystack.exp.services.concurrent.ParallelCalculator;
-import com.sandystack.exp.services.DummyDataProvider;
+import com.sandystack.exp.services.other.DummyDataProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

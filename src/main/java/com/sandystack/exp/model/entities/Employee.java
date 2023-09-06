@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Employee extends BaseEntity {
+public class Employee extends BaseEntity implements Serializable {
 
     @Id
     @Column(name = "employeeid", columnDefinition = "VARCHAR(255)")
