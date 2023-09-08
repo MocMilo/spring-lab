@@ -1,6 +1,5 @@
 package com.sandystack.exp.aop;
 
-import com.sandystack.exp.services.EmployeeService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * Example aspect with custom adnotation
+ */
 @Aspect
 @Component
 public class LogExecutionAspect {

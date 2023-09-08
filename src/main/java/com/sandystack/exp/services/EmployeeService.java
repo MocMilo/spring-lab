@@ -27,14 +27,14 @@ public class EmployeeService {
     @Cacheable(key = "#id", value = "Employee")
     public Employee fetchEmployeeById(String id) {
 
-        logger.info("fetch Employee from DB");
+        logger.info("Fetched Employee from DB");
         return employeeRepository.findById(id).orElse(null);
     }
 
     @LogExecution
     public List<Employee> findAll() {
 
-        logger.info("fetch Employee from DB");
+        logger.info("Fetched Employee from DB");
         return employeeRepository.findAll();
     }
 }

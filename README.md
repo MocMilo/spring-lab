@@ -1,12 +1,28 @@
-# Spring-lab project
-This is Spring boot project for experiments and POC.
+## Spring-lab project
+### This is Spring boot project for experiments and POC proof-of-concept. 
+#### Use JDK 17
 
-### 1) project contains examples of:
-- simple db model
-- JPA repository with Postgres DB (Docker container)
-- JMS producer and consumer with Kafka JMS (Docker container)
-- simple REST controller http://localhost:8080/test
-- simple Unit tests config
+### 1) project contains examples:
+- data model + repositories
+- rest controllers
+- Kafka producer and consumer
+- cache with Redis
+- parametrized unit tests with: mockmvc, h2 Sql scripts
+- JVM and GC memory management experiment
+- actuator
+- logback
+- aspect custom adnotation
+- lombok
+
+#### Project components (docker-compose):
+- Postgres DB
+- Kafka
+- Redis + Redis Commander
+- Prometheus
+- Grafana
+- Logstash
+- Elastic
+- Kibana
 
 ### 2) To run application on localhost:
 1. Open as Maven project in IntelliJ
@@ -26,37 +42,39 @@ pass:root
 4. Run script with in \sql folder to create DB tables
 5. Run Project as Spring boot application in IntelliJ
 
-### 3) To test working POC:
-just post request to url:
+### 3) To run POC:
+just post request to url (param is number of experiment to execute):
 ```
-http://localhost:8080/test
+http://localhost:8080/experiment/1
 ```
 #### For each request check changes:
 1. In database "Department" table new row should be created.
 2. In console you should see JMS info about created objects.
+### 4) Redis in-memory database
+url to test cache (first request is fetch from db, next requests from Redis cache)
+```
+http://localhost:8080/employees
+```
+url to Redis Commander: 
+```
+http://localhost:8081
+```
 
-### 4) To check health with Actuator
+In case of change in Redis serialization config flush Redis with command:
+```
+FLUSHDB
+```
+To remove all cached data
+```
+FLUSHALL
+```
+### 5) To check health with Actuator (for debug purpose)
 ```
 http://localhost:9001/actuator/metrics
 
 http://localhost:9001/actuator/metrics/executor.completed
 ```
-### 5) Redis in-memory database
-
-to login to Redis commander: 
-```
-http://localhost:8081
-```
-In case of change in Redis serialization config flush Redis with command:
-```
-FLUSHDB
-```
-To remove all cache
-```
-FLUSHALL
-```
-
-### 6) Prometheus UI
+### 6) Prometheus UI (for debug purpose, recommended use: Grafana)
 ```
 http://localhost:9090
 ```
@@ -71,17 +89,18 @@ login with default user: Admin
 
 Go to location in Grafana menu: 
 Home > Connections > Data sources > Add data source
-choose -> Prometheus
-    - Add Prometheus URL http://localhost:9090
-    - Add Dashboard
-    - Add visualisations
+choose >> Prometheus
+- add Prometheus URL http://localhost:9090
+- add Dashboard
+- add visualisations
 
 Home > Dashboards > New Dashboard > Edit panel
-    - Query
-    - Add example metric jvm_buffer_memory_used_bytes
+- Query
+- Add example metric jvm_buffer_memory_used_bytes
 
 ### 8) Kibana Elastic UI
 ```
 http://localhost:5601
 ```
-look for source: logstash-<date>
+In Kibana UI use source in name pattern: 
+#### logstash-create_date
