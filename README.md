@@ -80,3 +80,8 @@ Home > Dashboards > New Dashboard > Edit panel
     - Query
     - Add example metric jvm_buffer_memory_used_bytes
 
+### 8) Kibana Elastic UI
+```
+http://localhost:5601
+```
+look for source: logstash-<date>
