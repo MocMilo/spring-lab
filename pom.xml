@@ -46,6 +46,11 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!-- Spring AOP and AspectJ dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!--		<dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
