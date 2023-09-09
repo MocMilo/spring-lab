@@ -12,17 +12,17 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/redis/product")
+@RequestMapping("/public")
 public class ExampleRedisDBController {
 
     private ProductRedisRepository dao;
 
-    @PostMapping
+    @PostMapping("/redis/product")
     public Product save(@RequestBody Product product) {
         return dao.save(product);
     }
 
-    @GetMapping
+    @GetMapping("/redis/product")
     public List<Product> getAllProducts() {
         return dao.findAll();
     }
@@ -31,13 +31,13 @@ public class ExampleRedisDBController {
      * Product with price > 1000 is returned always form Database,
      * Product with price <= 1000 is first time returned from DB, later from cache
      */
-    @GetMapping("/{id}")
+    @GetMapping("/redis/product/{id}")
     @Cacheable(key = "#id", value = "Product", unless = "null != #result && #result.price > 1000")
     public Product findProductById(@PathVariable String id) {
         return dao.findProductById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/redis/product/{id}")
     @CacheEvict(key = "#id", value = "Product")  // if deleted it will also be deleted form cache
     public String remove(@PathVariable String id) {
         dao.deleteProduct(id);

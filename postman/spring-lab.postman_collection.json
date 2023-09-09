@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "ba62a1a0-21df-45d4-819d-bce740d81940",
+		"name": "spring-lab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11089143"
+	},
+	"item": [
+		{
+			"name": "keycloak",
+			"item": [
+				{
+					"name": "1. obtain access token from keycloak",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Keycloak1234",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "spring-lab-app",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "<CLIENT_SECRET_FROM_KEYCLOAK>",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak_url}}/realms/master/protocol/openid-connect/token",
+							"host": [
+								"{{keycloak_url}}"
+							],
+							"path": [
+								"realms",
+								"master",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. test example secured endpoint",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "<ACCESS_TOKEN>",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/secured/data",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"secured",
+								"data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "experiments (public)",
+			"item": [
+				{
+					"name": "experiment_1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/public/experiment/1",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"public",
+								"experiment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rest controller - redis (public)",
+			"item": [
+				{
+					"name": "create product",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"id\":\"107\",\r\n\"name\":\"Gadget2\" ,\r\n\"gty\":1,\r\n\"price\":1500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost_url}}/public/redis/product",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"public",
+								"redis",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all products",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/public/redis/product",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"public",
+								"redis",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/public/redis/product/107",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"public",
+								"redis",
+								"product",
+								"107"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rest controller - db cached (secured)",
+			"item": [
+				{
+					"name": "employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "<ACCESS_TOKEN>",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/secured/employee/9abca33e-b576-4f7b-b37f-727f0499b608",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"secured",
+								"employee",
+								"9abca33e-b576-4f7b-b37f-727f0499b608"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all employees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "<ACCESS_TOKEN>",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost_url}}/secured/employees",
+							"host": [
+								"{{localhost_url}}"
+							],
+							"path": [
+								"secured",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

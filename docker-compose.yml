@@ -31,6 +31,8 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+    networks:
+      - springlab-network
   zookeeper:
     image: 'confluentinc/cp-zookeeper:latest'
     environment:
@@ -45,7 +47,6 @@ services:
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://springlab-kafka-jms:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
   prometheus:
     image: prom/prometheus:latest
@@ -112,9 +113,59 @@ services:
       - XPACK_SECURITY_ENCRYPTIONKEY=your-strong-encryption-key-12345678
       - XPACK_REPORTING_ENCRYPTIONKEY=your-strong-encryption-key-12345678
 
+  postgres-keycloak:
+    image: postgres:13.7
+    container_name: postgres-keycloak
+    volumes:
+      - keycloak-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak_user
+      POSTGRES_PASSWORD: Test1234
+    networks:
+      - keycloak-network
+
+  keycloak:
+    build: ./keycloak-auth-service
+    container_name: keycloak-auth-service
+    environment:
+      KC_MODE: dev
+      KC_HOSTNAME_STRICT: 'false'
+      KC_HOSTNAME_STRICT_HTTPS: 'false'
+      KC_HTTP_ENABLED: 'true'
+      KC_DB_URL: 'jdbc:postgresql://postgres-keycloak/keycloak'
+      KC_DB_USERNAME: keycloak_user
+      KC_DB_PASSWORD: Test1234
+      KC_HEALTH_ENABLED: 'true'
+      KC_METRICS_ENABLED: 'true'
+      KC_HOSTNAME: localhost
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: Keycloak1234
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Keycloak1234
+      KEYCLOAK_HTTP_PORT: 8080
+      KEYCLOAK_HTTPS_PORT: -1
+      PROXY_ADDRESS_FORWARDING: "true"
+    command:
+      - "-v start --optimized"
+    ports:
+      - 8082:8080
+    depends_on:
+      - postgres-keycloak
+    networks:
+      - keycloak-network
+
 volumes:
   springlab-db-data:
   grafana-storage:
   redis-data:
   es-data:
+  keycloak-db-data:
+    driver: local
 
+networks:
+  springlab-network:
+    driver: bridge
+  # FIXME: hidden in separate network to avoid conflicts with springlab-db
+  keycloak-network:
+    driver: bridge
