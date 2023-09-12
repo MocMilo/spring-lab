@@ -26,6 +26,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(registry -> registry
                 .requestMatchers("/secured/**").hasRole("SYS_ADMIN")
                 .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().denyAll()
         );
 
