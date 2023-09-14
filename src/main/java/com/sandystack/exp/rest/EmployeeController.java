@@ -1,5 +1,6 @@
 package com.sandystack.exp.rest;
 
+import com.sandystack.exp.Exception.RestException;
 import com.sandystack.exp.model.entities.Employee;
 import com.sandystack.exp.services.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,16 @@ public class EmployeeController {
 
     @GetMapping("/employee/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
+
+        if ("yyy".equals(id)) {
+            throw RestException.builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .message("test message")
+                    .details(List.of("message 1", "message 2"))
+                    .build();
+        }
         Optional<Employee> employeeOp = Optional.ofNullable(employeeService.fetchEmployeeById(id));
+
         return employeeOp
                 .map(employee -> new ResponseEntity<>(employee, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
