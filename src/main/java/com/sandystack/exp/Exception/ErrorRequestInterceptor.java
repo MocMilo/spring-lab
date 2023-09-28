@@ -43,7 +43,8 @@ public class ErrorRequestInterceptor extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
+                                                                  HttpStatusCode status, WebRequest request) {
 
         return createErrorResponseAndLog(status, ex, VALIDATION_ERROR_MESSAGE, extractValidationErrorDetails(ex.getBindingResult()), request);
     }
@@ -63,7 +64,8 @@ public class ErrorRequestInterceptor extends ResponseEntityExceptionHandler {
         return createErrorResponseAndLog(status, ex, VALIDATION_ERROR_MESSAGE, details, request);
     }
 
-    private ResponseEntity<Object> createErrorResponseAndLog(HttpStatusCode statusCode, Throwable e, String message, List<String> details, WebRequest request) {
+    private ResponseEntity<Object> createErrorResponseAndLog(HttpStatusCode statusCode, Throwable e, String message,
+                                                             List<String> details, WebRequest request) {
 
         String finalMessage = message != null ? message : e.getMessage();
 
