@@ -19,7 +19,6 @@ import java.util.Map;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
     @Bean
     public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
 
@@ -33,7 +32,9 @@ public class SecurityConfig {
         http.csrf(csrf ->
                 csrf.ignoringRequestMatchers("/public/**"));
 
-        http.oauth2ResourceServer(oauth2Configurer -> oauth2Configurer.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwt -> {
+        http.oauth2ResourceServer(oauth2Configurer -> oauth2Configurer.jwt(jwtConfigurer ->
+                jwtConfigurer.jwtAuthenticationConverter(jwt -> {
+
             Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
             Collection<String> roles = realmAccess.get("roles");
             var grantedAuthorities = roles.stream()

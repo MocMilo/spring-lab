@@ -46,4 +46,7 @@ public class Employee extends BaseEntity implements Serializable {
     private String phone;
 
     private String email;
+
+    @Version
+    private Integer version;
 }

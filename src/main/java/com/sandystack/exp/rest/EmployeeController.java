@@ -1,15 +1,15 @@
 package com.sandystack.exp.rest;
 
 import com.sandystack.exp.Exception.RestException;
+import com.sandystack.exp.model.dto.EmployeeConverter;
+import com.sandystack.exp.model.dto.EmployeeDTO;
 import com.sandystack.exp.model.entities.Employee;
 import com.sandystack.exp.services.EmployeeService;
+import com.sandystack.exp.services.concurrent.ProxyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeController {
 
+    private EmployeeConverter employeeConverter;
+
     private EmployeeService employeeService;
+
+    private ProxyService proxyService;
 
     @GetMapping("/employee/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
@@ -47,5 +51,37 @@ public class EmployeeController {
         return employees.isEmpty() ?
                 ResponseEntity.notFound().build() :
                 ResponseEntity.ok(employees);
+    }
+
+    @PostMapping("/employee")
+    void createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+
+        employeeService.save(employeeConverter.toEntity(employeeDTO));
+    }
+
+    @PutMapping("/employee")
+    void updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+
+        employeeService.save(employeeConverter.toEntity(employeeDTO));
+    }
+
+    @DeleteMapping("/employee/{id}")
+    void deleteEmployee(@PathVariable String id) {
+
+        employeeService.deleteById(id);
+    }
+
+    @PostMapping("/experiment/{expNo}/Employee")
+    void updateEmployee(@PathVariable Integer expNo) {
+
+        if (expNo == 1) {
+            // optimistic lock exception
+            proxyService.saveWithOptimisticLockException();
+        } else {
+            throw RestException.builder()
+                    .message("No such experiment, provide correct number param")
+                    .httpStatus(HttpStatus.NOT_FOUND)
+                    .build();
+        }
     }
 }
