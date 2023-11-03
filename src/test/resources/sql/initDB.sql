@@ -28,7 +28,8 @@ CREATE TABLE public.employee(
     address      varchar NULL,
     phone        varchar NULL,
     email        varchar      NOT NULL,
-    CONSTRAINT employee_pkey PRIMARY KEY (employeeid)
+    version      numeric      NOT NULL,
+    CONSTRAINT employee_pkey  PRIMARY KEY (employeeid)
 );
 
 CREATE TABLE public.sales(
